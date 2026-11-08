@@ -3,7 +3,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'release/MENTALISTA_NEXUS_3_1.tar.xz'
+      - 'release/MENTALISTA_NEXUS_3_1.zip'
       - '.github/workflows/deploy-release.yml'
   workflow_dispatch:
 permissions:
@@ -23,25 +23,24 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Descodificar e extrair MENTALISTA NEXUS 3.1
+      - name: Extrair MENTALISTA NEXUS 3.1
         run: |
-          base64 --decode release/MENTALISTA_NEXUS_3_1.tar.xz > /tmp/mentalista-nexus-3.1.tar.xz
           mkdir -p app
-          tar -xJf /tmp/mentalista-nexus-3.1.tar.xz -C app
-          test -f app/package.json
-          test -f app/src/App.tsx
+          unzip -q release/MENTALISTA_NEXUS_3_1.zip -d app
+          test -f app/MENTALISTA_NEXUS_3_1/package.json
+          test -f app/MENTALISTA_NEXUS_3_1/src/App.tsx
       - name: Instalar dependências
-        working-directory: app
+        working-directory: app/MENTALISTA_NEXUS_3_1
         run: npm install
       - name: Compilar aplicação
-        working-directory: app
+        working-directory: app/MENTALISTA_NEXUS_3_1
         run: npm run build
       - name: Preparar GitHub Pages
         uses: actions/configure-pages@v5
       - name: Carregar versão compilada
         uses: actions/upload-pages-artifact@v3
         with:
-          path: app/dist
+          path: app/MENTALISTA_NEXUS_3_1/dist
   deploy:
     environment:
       name: github-pages
