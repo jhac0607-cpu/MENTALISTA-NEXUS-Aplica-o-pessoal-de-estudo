@@ -1,0 +1,25 @@
+﻿{
+  "name": "MENTALISTA NEXUS",
+  "short_name": "NEXUS",
+  "start_url": "/MENTALISTA-NEXUS-Aplica-o-pessoal-de-estudo/",
+  "scope": "/MENTALISTA-NEXUS-Aplica-o-pessoal-de-estudo/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#090b13",
+  "theme_color": "#090b13",
+  "description": "Estudo, engenharia, apontamentos e desafios num só lugar.",
+  "icons": [
+    {
+      "src": "/MENTALISTA-NEXUS-Aplica-o-pessoal-de-estudo/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/MENTALISTA-NEXUS-Aplica-o-pessoal-de-estudo/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
