@@ -23,10 +23,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Extrair MENTALISTA NEXUS 3.1
+      - name: Descodificar e extrair MENTALISTA NEXUS 3.1
         run: |
+          base64 --decode release/MENTALISTA_NEXUS_3_1.tar.xz > /tmp/mentalista-nexus-3.1.tar.xz
           mkdir -p app
-          tar -xJf release/MENTALISTA_NEXUS_3_1.tar.xz -C app
+          tar -xJf /tmp/mentalista-nexus-3.1.tar.xz -C app
           test -f app/package.json
           test -f app/src/App.tsx
       - name: Instalar dependências
