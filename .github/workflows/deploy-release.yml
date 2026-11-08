@@ -1,0 +1,53 @@
+name: Publicar MENTALISTA NEXUS 3.1
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'release/MENTALISTA_NEXUS_3_1.tar.xz'
+      - '.github/workflows/deploy-release.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obter código
+        uses: actions/checkout@v4
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Extrair MENTALISTA NEXUS 3.1
+        run: |
+          mkdir -p app
+          tar -xJf release/MENTALISTA_NEXUS_3_1.tar.xz -C app
+          test -f app/package.json
+          test -f app/src/App.tsx
+      - name: Instalar dependências
+        working-directory: app
+        run: npm install
+      - name: Compilar aplicação
+        working-directory: app
+        run: npm run build
+      - name: Preparar GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Carregar versão compilada
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: app/dist
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Publicar página
+        id: deployment
+        uses: actions/deploy-pages@v4
